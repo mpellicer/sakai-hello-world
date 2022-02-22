@@ -31,4 +31,16 @@
         <property name="sessionFactory" ref="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
     </bean>
 
+    <!-- Scheduling -->
+    <bean id="com.edf.helloworld.impl.jobs.HelloWorldJob" class="com.edf.helloworld.impl.jobs.HelloWorldJob">
+        <property name="helloWorldService" ref="com.edf.helloworld.api.HelloWorldService" />
+    </bean>
+
+    <bean id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.com.edf.helloworld.impl.jobs.HelloWorldJob"
+          class="org.sakaiproject.component.app.scheduler.jobs.SpringStatefulJobBeanWrapper"
+          init-method="init">
+        <property name="beanId" value="com.edf.helloworld.impl.jobs.HelloWorldJob"/>
+        <property name="jobName" value="Hello World Job"/>
+        <property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager"/>
+    </bean>
 </beans>
