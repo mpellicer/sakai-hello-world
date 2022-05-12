@@ -14,6 +14,7 @@
 
     <bean id="com.edf.helloworld.api.HelloWorldService" class="com.edf.helloworld.impl.HelloWorldServiceImpl" init-method="init">
         <property name="helloWorldRepository" ref="com.edf.helloworld.api.persistence.HelloWorldRepository"/>
+        <property name="subjectRepository" ref="com.edf.helloworld.api.persistence.SubjectRepository"/>
     </bean>
 
     <!--  Hibernate persistence -->
@@ -22,12 +23,18 @@
         <property name="annotatedClasses">
             <list>
                 <value>com.edf.helloworld.api.model.Person</value>
+                <value>com.edf.helloworld.api.model.Subject</value>
             </list>
         </property>
     </bean>
 
     <bean id="com.edf.helloworld.api.persistence.HelloWorldRepository"
           class="com.edf.helloworld.impl.persistence.HelloWorldRepositoryImpl">
+        <property name="sessionFactory" ref="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
+    </bean>
+
+    <bean id="com.edf.helloworld.api.persistence.SubjectRepository"
+          class="com.edf.helloworld.impl.persistence.SubjectRepositoryImpl">
         <property name="sessionFactory" ref="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
     </bean>
 

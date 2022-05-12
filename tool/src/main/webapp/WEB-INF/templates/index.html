@@ -8,7 +8,7 @@
     <div class="page-header">
       <h1 th:text="#{common_title}"></h1>
     </div>
-    <div class="sak-banner-info" th:text="#{index_hello(${userName})}">Hello Miguel</div>
+    <h1 th:text="${siteTitle}"></h1>
     <div class="form-group">
         <button class="btn btn-primary" th:attr="onclick=|addMe();|">Create one</button>
     </div>
@@ -18,13 +18,34 @@
                 <tr>
                     <td>Name</td>
                     <td>Context</td>
+                    <td>Address</td>
                 </tr>
             </thead>
             <tbody>
                 <tr th:attr="id=${person.id}" th:each="person : ${personList}">
                     <td th:text="${person.name}"></td>
                     <td th:text="${person.context}"></td>
+                    <td th:text="${person.address}"></td>
                     <td><a href="#" th:attr="onclick=|removeMe('${person.id}');|" >Remove me</a></td>            
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h1>Las asignaturas empiezan aqui:</h1>
+    <div class="sak-banner-info" th:text="#{subject_count(${subjectCount})}">Tienes 2547589y34789yheghdsf78ghgewbh78ewh g78ewgh 78e aignatusasds.</div>
+    <div th:if="${subjectList == null}"></div>
+    <div class="table-responsive" th:if="${subjectList != null && !subjectList.isEmpty()}">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>Context</td>
+                    <td>Title</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:attr="id=${subject.context}" th:each="subject : ${subjectList}">
+                    <td th:text="${subject.context}"></td>
+                    <td th:text="${subject.title}"></td>
                 </tr>
             </tbody>
         </table>

@@ -1,5 +1,8 @@
 package com.edf.helloworld.service;
 
+import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.site.api.Site;
+import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.User;
@@ -23,6 +26,9 @@ public class HelloWorldToolService {
     @Autowired
     private ToolManager toolManager;
 
+    @Autowired
+    private SiteService siteService;
+
     public User getCurrentUser() {
         String userId = sessionManager.getCurrentSessionUserId();
         log.info("Current user is {}", userId);
@@ -36,6 +42,18 @@ public class HelloWorldToolService {
 
     public String getCurrentSiteId() {
         return toolManager.getCurrentPlacement().getContext();
+    }
+
+    public String dameNombreDeAsignatura() {
+    	Site site = null;
+    	try {
+    		site = siteService.getSite(this.getCurrentSiteId());
+    		return site.getTitle();
+    	} catch (Exception ex) {
+    		log.error("no puedo obtener el nombre del curso {}", this.getCurrentSiteId());
+    	}
+    	return "";
+		    	
     }
 
 }

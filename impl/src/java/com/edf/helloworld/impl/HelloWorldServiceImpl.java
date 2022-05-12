@@ -4,7 +4,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edf.helloworld.api.HelloWorldService;
 import com.edf.helloworld.api.model.Person;
+import com.edf.helloworld.api.model.Subject;
 import com.edf.helloworld.api.persistence.HelloWorldRepository;
+import com.edf.helloworld.api.persistence.SubjectRepository;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,9 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
     @Setter
     private HelloWorldRepository helloWorldRepository;
+
+    @Setter
+    private SubjectRepository subjectRepository;
 
     public void init() {
         log.info("Initializing Hello World Service");
@@ -58,5 +63,30 @@ public class HelloWorldServiceImpl implements HelloWorldService {
     public long countPersons() {
         return helloWorldRepository.count();
     }
+
+	@Override
+	public Iterable<Subject> listAllSubjects() {
+		return subjectRepository.findAll();
+	}
+
+	@Override
+	public long countSubjects() {
+		return subjectRepository.count();
+	}
+
+	@Override
+	public void newSubject(Subject subject) {
+		subjectRepository.persist(subject);		
+	}
+
+	@Override
+	public void deleteSubject(Subject subject) {
+		subjectRepository.delete(subject);		
+	}
+
+	@Override
+	public Iterable<Subject> existeLaAsignatura(Subject subject) {
+		return subjectRepository.findOneByTitle(subject.getTitle());
+	}
 
 }

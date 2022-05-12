@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.edf.helloworld.api.HelloWorldService;
 import com.edf.helloworld.api.model.Person;
+import com.edf.helloworld.api.model.Subject;
 import com.edf.helloworld.service.HelloWorldToolService;
 
 /**
@@ -60,11 +61,32 @@ public class MainController {
         return helloWorldService.findAll();
     }
 
+    @ModelAttribute("subjectList")
+    public Iterable<Subject> subjectList() {
+        return helloWorldService.listAllSubjects();
+    }
+
+    @ModelAttribute("subjectCount")
+    public long subjectCount() {
+        return helloWorldService.countSubjects();
+    }
+
     @GetMapping(value = {"/", "/index"})
     public String index(Model model) {
         log.debug("Accessing the config editor index");
         log.info("We currently have {} persons.", helloWorldService.countPersons());
         model.addAttribute("currentSiteId", helloWorldToolService.getCurrentSiteId());
+        model.addAttribute("siteTitle", helloWorldToolService.dameNombreDeAsignatura());
+        Subject newSubject = new Subject();
+        newSubject.setContext(helloWorldToolService.getCurrentSiteId());
+        newSubject.setTitle(helloWorldToolService.dameNombreDeAsignatura());
+        boolean tieneAsignatura = false;
+        for (Subject asignatura : helloWorldService.existeLaAsignatura(newSubject)) {
+        	tieneAsignatura = true;
+        }
+        if (tieneAsignatura == false) {
+            helloWorldService.newSubject(newSubject);
+        }
         return INDEX_TEMPLATE;
     }
 

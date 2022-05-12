@@ -36,5 +36,8 @@ public class Person {
     @Column(name = "CONTEXT", length = 99, nullable = false)
     private String context;
 
+    @Column(name = "ADDRESS", length = 99, nullable = false)
+    private String address;
+
 }
 
