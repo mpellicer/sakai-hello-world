@@ -1,5 +1,7 @@
 package com.edf.helloworld.api;
 
+import java.util.Optional;
+
 import com.edf.helloworld.api.model.Person;
 import com.edf.helloworld.api.model.Subject;
 
@@ -33,6 +35,6 @@ public interface HelloWorldService {
     
     public void deleteSubject(Subject subject);
     
-    public Iterable<Subject> existeLaAsignatura(Subject subject);
+    public Optional<Subject> recuperaAsignatura(String idAsignatura);
 
 }

@@ -75,17 +75,20 @@ public class MainController {
     public String index(Model model) {
         log.debug("Accessing the config editor index");
         log.info("We currently have {} persons.", helloWorldService.countPersons());
-        model.addAttribute("currentSiteId", helloWorldToolService.getCurrentSiteId());
-        model.addAttribute("siteTitle", helloWorldToolService.dameNombreDeAsignatura());
-        Subject newSubject = new Subject();
-        newSubject.setContext(helloWorldToolService.getCurrentSiteId());
-        newSubject.setTitle(helloWorldToolService.dameNombreDeAsignatura());
-        boolean tieneAsignatura = false;
-        for (Subject asignatura : helloWorldService.existeLaAsignatura(newSubject)) {
-        	tieneAsignatura = true;
-        }
-        if (tieneAsignatura == false) {
-            helloWorldService.newSubject(newSubject);
+        String nombreAsignatura = helloWorldToolService.dameNombreDeAsignatura();
+        String idAsignatura = helloWorldToolService.getCurrentSiteId();
+        model.addAttribute("currentSiteId", idAsignatura);
+        model.addAttribute("siteTitle", nombreAsignatura);
+        // Vamos a comprobar si la asignatura existe
+        Subject asignatura = helloWorldService.recuperaAsignatura(idAsignatura).orElse(null);
+        if (asignatura == null) {
+            Subject newSubject = new Subject();
+            newSubject.setContext(idAsignatura);
+            newSubject.setTitle(nombreAsignatura);
+            helloWorldService.newSubject(newSubject);        	
+        } else {
+        	System.out.println("La asignatura " + idAsignatura + " ya existe");
+        	log.info("La asignatura {} ya existe", idAsignatura);
         }
         return INDEX_TEMPLATE;
     }

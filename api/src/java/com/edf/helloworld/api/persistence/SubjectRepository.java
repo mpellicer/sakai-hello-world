@@ -6,6 +6,4 @@ import org.sakaiproject.serialization.SerializableRepository;
 
 public interface SubjectRepository extends SerializableRepository<Subject, String> {
 
-    Iterable<Subject> findOneByTitle(String title);
-
 }

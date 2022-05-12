@@ -20,10 +20,4 @@ public class SubjectRepositoryImpl extends BasicSerializableRepository<Subject, 
         return sessionFactory.getCurrentSession();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public Iterable<Subject> findOneByTitle(String title) {
-        return startCriteriaQuery().add(Restrictions.eq("title", title)).list();
-    }
-
 }

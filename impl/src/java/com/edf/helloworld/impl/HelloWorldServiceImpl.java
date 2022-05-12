@@ -1,5 +1,7 @@
 package com.edf.helloworld.impl;
 
+import java.util.Optional;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edf.helloworld.api.HelloWorldService;
@@ -85,8 +87,8 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 	}
 
 	@Override
-	public Iterable<Subject> existeLaAsignatura(Subject subject) {
-		return subjectRepository.findOneByTitle(subject.getTitle());
+	public Optional<Subject> recuperaAsignatura(String idAsignatura) {
+		return Optional.ofNullable(subjectRepository.findOne(idAsignatura));
 	}
 
 }
