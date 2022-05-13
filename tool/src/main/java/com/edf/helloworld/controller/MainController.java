@@ -18,6 +18,11 @@ package com.edf.helloworld.controller;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Set;
+
+import org.sakaiproject.authz.api.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +36,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.edf.helloworld.api.HelloWorldService;
 import com.edf.helloworld.api.model.Person;
 import com.edf.helloworld.api.model.Subject;
+import com.edf.helloworld.model.Anotacion;
 import com.edf.helloworld.service.HelloWorldToolService;
 
 /**
@@ -79,6 +85,10 @@ public class MainController {
         String idAsignatura = helloWorldToolService.getCurrentSiteId();
         model.addAttribute("currentSiteId", idAsignatura);
         model.addAttribute("siteTitle", nombreAsignatura);
+        Set<Member> listadoMiembros = helloWorldToolService.damePersonasCurso();
+        System.out.println("La lista de miembros.....");
+        model.addAttribute("listadoMiembros", listadoMiembros);
+        model.addAttribute("anotacion", new Anotacion());
         // Vamos a comprobar si la asignatura existe
         Subject asignatura = helloWorldService.recuperaAsignatura(idAsignatura).orElse(null);
         if (asignatura == null) {
@@ -91,6 +101,13 @@ public class MainController {
         	log.info("La asignatura {} ya existe", idAsignatura);
         }
         return INDEX_TEMPLATE;
+    }
+
+    @PostMapping("/add/annotation")
+    public String greetingSubmit(@ModelAttribute Anotacion anotacion, Model model) {
+      String respuesta = MessageFormat.format("He recibido la anotacion {0} de la persona {1} y es visible {2}", anotacion.getAnotacion(), anotacion.getPersona(), anotacion.isVisible());
+      System.out.println(respuesta);
+      return INDEX_TEMPLATE;
     }
 
     @PostMapping(value="/add/{siteId}")

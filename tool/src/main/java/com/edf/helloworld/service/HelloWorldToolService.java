@@ -1,5 +1,10 @@
 package com.edf.helloworld.service;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.sakaiproject.authz.api.Member;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
@@ -55,5 +60,16 @@ public class HelloWorldToolService {
     	return "";
 		    	
     }
+
+	public Set<Member> damePersonasCurso() {
+    	Site site = null;
+    	try {
+    		site = siteService.getSite(this.getCurrentSiteId());
+    		return site.getMembers();
+    	} catch (Exception ex) {
+    		log.error("no puedo obtener el nombre del curso {}", this.getCurrentSiteId());
+    	}
+    	return new HashSet<>();
+	}
 
 }

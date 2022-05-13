@@ -50,4 +50,20 @@
         <property name="jobName" value="Hello World Job"/>
         <property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager"/>
     </bean>
+
+    <!-- Scheduling -->
+    <bean id="com.edf.helloworld.impl.jobs.EnviadorEmails" class="com.edf.helloworld.impl.jobs.EnviadorEmails">
+        <property name="helloWorldService" ref="com.edf.helloworld.api.HelloWorldService" />
+        <property name="emailService" ref="org.sakaiproject.email.api.EmailService" />
+        <property name="sqlService" ref="org.sakaiproject.db.api.SqlService" />        
+    </bean>
+
+    <bean id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.com.edf.helloworld.impl.jobs.EnviadorEmails"
+          class="org.sakaiproject.component.app.scheduler.jobs.SpringStatefulJobBeanWrapper"
+          init-method="init">
+        <property name="beanId" value="com.edf.helloworld.impl.jobs.EnviadorEmails"/>
+        <property name="jobName" value="Envia todas las anotaciones del dia de hoy."/>
+        <property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager"/>
+    </bean>
+
 </beans>

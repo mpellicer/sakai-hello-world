@@ -16,7 +16,7 @@ public class HelloWorldJob implements Job {
     private HelloWorldService helloWorldService;
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        log.info("Hello world job, we have {} persons.", helloWorldService.countPersons());
+    	System.out.println("Yo soy el trabajo del HOLA MUNDO");
     }
 
 }
