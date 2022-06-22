@@ -34,9 +34,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.edf.helloworld.api.HelloWorldService;
+import com.edf.helloworld.api.model.Anotacion;
 import com.edf.helloworld.api.model.Person;
 import com.edf.helloworld.api.model.Subject;
-import com.edf.helloworld.model.Anotacion;
 import com.edf.helloworld.service.HelloWorldToolService;
 
 /**
@@ -89,6 +89,8 @@ public class MainController {
         System.out.println("La lista de miembros.....");
         model.addAttribute("listadoMiembros", listadoMiembros);
         model.addAttribute("anotacion", new Anotacion());
+        model.addAttribute("listaAnotaciones", helloWorldService.dameTodasLasAnotaciones());
+
         // Vamos a comprobar si la asignatura existe
         Subject asignatura = helloWorldService.recuperaAsignatura(idAsignatura).orElse(null);
         if (asignatura == null) {
@@ -104,10 +106,11 @@ public class MainController {
     }
 
     @PostMapping("/add/annotation")
-    public String greetingSubmit(@ModelAttribute Anotacion anotacion, Model model) {
+    public String nuevaAnotacion(@ModelAttribute Anotacion anotacion, Model model) {
       String respuesta = MessageFormat.format("He recibido la anotacion {0} de la persona {1} y es visible {2}", anotacion.getAnotacion(), anotacion.getPersona(), anotacion.isVisible());
       System.out.println(respuesta);
-      return INDEX_TEMPLATE;
+      helloWorldService.nuevaAnotacion(anotacion);
+      return this.index(model);
     }
 
     @PostMapping(value="/add/{siteId}")

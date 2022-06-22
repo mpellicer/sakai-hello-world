@@ -33,15 +33,11 @@
 	      </tr>
 	    </thead>
 	    <tbody>
-	      <tr>
-	        <td>Miguel</td>
-	        <td>XXXXXX</td>
-	        <td>Sí</td>
-	      </tr>
-	      <tr>
-	        <td>Mary</td>
-	        <td>YYYYY</td>
-	        <td>No</td>
+	      <tr th:each="anotacion : ${listaAnotaciones}">
+	        <td th:text="${anotacion.persona}">Miguel</td>
+	        <td th:text="${anotacion.anotacion}">XXXXXX</td>
+	        <td th:if="${anotacion.visible}"><i class="fa fa-eye" aria-hidden="true"></i></td>
+	        <td th:if="${anotacion.visible == false}"><i class="fa fa-eye-slash" aria-hidden="true"></i></td>
 	      </tr>
 	    </tbody>
 	  </table>

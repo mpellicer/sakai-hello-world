@@ -2,6 +2,7 @@ package com.edf.helloworld.api;
 
 import java.util.Optional;
 
+import com.edf.helloworld.api.model.Anotacion;
 import com.edf.helloworld.api.model.Person;
 import com.edf.helloworld.api.model.Subject;
 
@@ -37,4 +38,20 @@ public interface HelloWorldService {
     
     public Optional<Subject> recuperaAsignatura(String idAsignatura);
 
+    /********* NUEVAS OPERACIONES DE ANOTACIONES *******/    
+    public Anotacion encuentraAnotacion(String id);
+
+    public Iterable<Anotacion> dameTodasLasAnotaciones();
+
+    public Iterable<Anotacion> dameAnotacionesPorPersona(String persona);
+
+    public void nuevaAnotacion(Anotacion anotacon);
+
+    public void guardaAnotacion(Anotacion anotacion);
+
+    public void borraAnotacionPorId(String id);
+
+    public void borraAnotacion(Anotacion anotacion);
+
+    public long totalAnotaciones();
 }

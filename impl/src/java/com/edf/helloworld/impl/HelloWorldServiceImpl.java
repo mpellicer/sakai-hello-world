@@ -5,9 +5,11 @@ import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edf.helloworld.api.HelloWorldService;
+import com.edf.helloworld.api.model.Anotacion;
 import com.edf.helloworld.api.model.Person;
 import com.edf.helloworld.api.model.Subject;
 import com.edf.helloworld.api.persistence.HelloWorldRepository;
+import com.edf.helloworld.api.persistence.RepositorioAnotaciones;
 import com.edf.helloworld.api.persistence.SubjectRepository;
 
 import lombok.Setter;
@@ -22,6 +24,9 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
     @Setter
     private SubjectRepository subjectRepository;
+
+    @Setter
+    private RepositorioAnotaciones repositorioAnotaciones;
 
     public void init() {
         log.info("Initializing Hello World Service");
@@ -89,6 +94,46 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 	@Override
 	public Optional<Subject> recuperaAsignatura(String idAsignatura) {
 		return Optional.ofNullable(subjectRepository.findOne(idAsignatura));
+	}
+
+	@Override
+	public Anotacion encuentraAnotacion(String id) {
+		return repositorioAnotaciones.findOne(id);
+	}
+
+	@Override
+	public Iterable<Anotacion> dameTodasLasAnotaciones() {
+		return repositorioAnotaciones.findAll();
+	}
+
+	@Override
+	public Iterable<Anotacion> dameAnotacionesPorPersona(String persona) {
+		return repositorioAnotaciones.dameAnotacionesPorPersona(persona);
+	}
+
+	@Override
+	public void nuevaAnotacion(Anotacion anotacion) {
+		repositorioAnotaciones.persist(anotacion);
+	}
+
+	@Override
+	public void guardaAnotacion(Anotacion anotacion) {
+		repositorioAnotaciones.merge(anotacion);		
+	}
+
+	@Override
+	public void borraAnotacionPorId(String id) {
+		repositorioAnotaciones.delete(id);		
+	}
+
+	@Override
+	public void borraAnotacion(Anotacion anotacion) {
+		repositorioAnotaciones.delete(anotacion);		
+	}
+
+	@Override
+	public long totalAnotaciones() {
+		return repositorioAnotaciones.count();
 	}
 
 }
